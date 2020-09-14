@@ -1,0 +1,295 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="LMS.API.Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Loan_Outstanding_3">
+          <Key>
+            <PropertyRef Name="Account_Number" />
+          </Key>
+          <Property Name="EntryID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Account_Number" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Account_Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Balance" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+        </EntityType>
+        <EntityType Name="LoanApplication">
+          <Key>
+            <PropertyRef Name="ApplicationID" />
+          </Key>
+          <Property Name="ApplicationID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FullName" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="RequestAmount" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="SectorID" Type="varchar" MaxLength="50" />
+          <Property Name="ContactNumber" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Location" Type="varchar" MaxLength="50" />
+          <Property Name="NearestLandmark" Type="varchar" MaxLength="150" />
+          <Property Name="DistributionMode" Type="varchar" MaxLength="50" />
+          <Property Name="MNO" Type="varchar" MaxLength="50" />
+          <Property Name="MomoNumber" Type="varchar" MaxLength="50" />
+          <Property Name="BankAccountNumber" Type="varchar" MaxLength="50" />
+          <Property Name="BankName" Type="varchar" MaxLength="50" />
+          <Property Name="ApplicationDate" Type="datetime" />
+          <Property Name="Comments" Type="varchar" MaxLength="250" />
+        </EntityType>
+        <EntityType Name="ServiceProvider">
+          <Key>
+            <PropertyRef Name="ProviderID" />
+          </Key>
+          <Property Name="ProviderID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProviderType" Type="varchar" MaxLength="50" />
+          <Property Name="Description" Type="nchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="Transactions">
+          <Key>
+            <PropertyRef Name="EntryID" />
+          </Key>
+          <Property Name="EntryID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RefNo" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ProviderType" Type="varchar" MaxLength="50" />
+          <Property Name="ProviderName" Type="varchar" MaxLength="50" />
+          <Property Name="AccountNumber" Type="varchar" MaxLength="50" />
+          <Property Name="ContactNumber" Type="varchar" MaxLength="50" />
+          <Property Name="EmailAddress" Type="varchar" MaxLength="50" />
+          <Property Name="Amount" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="TransactionID" Type="varchar" MaxLength="50" />
+          <Property Name="TransactionType" Type="varchar" MaxLength="50" />
+          <Property Name="EntryDate" Type="datetime" />
+          <Property Name="LastUpdated" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Transactions_Logs">
+          <Key>
+            <PropertyRef Name="LogID" />
+          </Key>
+          <Property Name="LogID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Descriptions" Type="varchar(max)" />
+          <Property Name="LogEntryDateTime" Type="datetime" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'PROVISO-LMSDB.dbo.vwCustomersLoanOutstanding' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="vwCustomersLoanOutstanding">
+          <Key>
+            <PropertyRef Name="EntryID" />
+            <PropertyRef Name="Account_Number" />
+            <PropertyRef Name="Account_Name" />
+            <PropertyRef Name="Balance" />
+          </Key>
+          <Property Name="EntryID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Account_Number" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Account_Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Balance" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+        </EntityType>
+        <Function Name="usp_validateCustomerRefernceID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="RefNo" Type="varchar" Mode="In" />
+        </Function>
+        <EntityContainer Name="LMSAPIModelStoreContainer">
+          <EntitySet Name="Loan_Outstanding_3" EntityType="Self.Loan_Outstanding_3" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LoanApplication" EntityType="Self.LoanApplication" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ServiceProvider" EntityType="Self.ServiceProvider" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Transactions" EntityType="Self.Transactions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Transactions_Logs" EntityType="Self.Transactions_Logs" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="vwCustomersLoanOutstanding" EntityType="Self.vwCustomersLoanOutstanding" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vwCustomersLoanOutstanding].[EntryID] AS [EntryID], 
+    [vwCustomersLoanOutstanding].[Account_Number] AS [Account_Number], 
+    [vwCustomersLoanOutstanding].[Account_Name] AS [Account_Name], 
+    [vwCustomersLoanOutstanding].[Balance] AS [Balance]
+    FROM [dbo].[vwCustomersLoanOutstanding] AS [vwCustomersLoanOutstanding]</DefiningQuery>
+          </EntitySet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="LMS.API.Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="LoanApplication">
+          <Key>
+            <PropertyRef Name="ApplicationID" />
+          </Key>
+          <Property Name="ApplicationID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FullName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="RequestAmount" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="SectorID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ContactNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Location" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="NearestLandmark" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="DistributionMode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="MNO" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="MomoNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="BankAccountNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="BankName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ApplicationDate" Type="DateTime" Precision="3" />
+          <Property Name="Comments" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="ServiceProvider">
+          <Key>
+            <PropertyRef Name="ProviderID" />
+          </Key>
+          <Property Name="ProviderID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProviderType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+        </EntityType>
+        <EntityContainer Name="LMSdbContext" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="LoanApplications" EntityType="Self.LoanApplication" />
+          <EntitySet Name="ServiceProviders" EntityType="Self.ServiceProvider" />
+          <EntitySet Name="Transactions" EntityType="LMS.API.Model.Transaction" />
+          <FunctionImport Name="usp_validateCustomerRefernceID">
+          <Parameter Name="RefNo" Mode="In" Type="String" />
+          </FunctionImport>
+          <EntitySet Name="vwCustomersLoanOutstandings" EntityType="LMS.API.Model.vwCustomersLoanOutstanding" />
+          <EntitySet Name="Transactions_Logs" EntityType="LMS.API.Model.Transactions_Logs" />
+          <EntitySet Name="Loan_Outstanding_3" EntityType="LMS.API.Model.Loan_Outstanding_3" />
+        </EntityContainer>
+        <EntityType Name="Transaction">
+          <Key>
+            <PropertyRef Name="EntryID" />
+          </Key>
+          <Property Name="EntryID" Type="Int32" Nullable="false" />
+          <Property Name="RefNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="TransactionID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ProviderType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ProviderName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="AccountNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ContactNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="EmailAddress" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Amount" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="TransactionType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="EntryDate" Type="DateTime" Precision="3" />
+          <Property Name="LastUpdated" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="vwCustomersLoanOutstanding">
+          <Key>
+            <PropertyRef Name="EntryID" />
+            <PropertyRef Name="Account_Number" />
+            <PropertyRef Name="Account_Name" />
+            <PropertyRef Name="Balance" />
+          </Key>
+          <Property Name="EntryID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Account_Number" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Account_Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Balance" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+        </EntityType>
+        <EntityType Name="Transactions_Logs">
+          <Key>
+            <PropertyRef Name="LogID" />
+          </Key>
+          <Property Name="LogID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Descriptions" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="LogEntryDateTime" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="Loan_Outstanding_3">
+          <Key>
+            <PropertyRef Name="Account_Number" />
+          </Key>
+          <Property Name="EntryID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Account_Number" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Account_Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Balance" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="LMSAPIModelStoreContainer" CdmEntityContainer="LMSdbContext">
+          <EntitySetMapping Name="LoanApplications">
+            <EntityTypeMapping TypeName="LMS.API.Model.LoanApplication">
+              <MappingFragment StoreEntitySet="LoanApplication">
+                <ScalarProperty Name="ApplicationID" ColumnName="ApplicationID" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="RequestAmount" ColumnName="RequestAmount" />
+                <ScalarProperty Name="SectorID" ColumnName="SectorID" />
+                <ScalarProperty Name="ContactNumber" ColumnName="ContactNumber" />
+                <ScalarProperty Name="Location" ColumnName="Location" />
+                <ScalarProperty Name="NearestLandmark" ColumnName="NearestLandmark" />
+                <ScalarProperty Name="DistributionMode" ColumnName="DistributionMode" />
+                <ScalarProperty Name="MNO" ColumnName="MNO" />
+                <ScalarProperty Name="MomoNumber" ColumnName="MomoNumber" />
+                <ScalarProperty Name="BankAccountNumber" ColumnName="BankAccountNumber" />
+                <ScalarProperty Name="BankName" ColumnName="BankName" />
+                <ScalarProperty Name="ApplicationDate" ColumnName="ApplicationDate" />
+                <ScalarProperty Name="Comments" ColumnName="Comments" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ServiceProviders">
+            <EntityTypeMapping TypeName="LMS.API.Model.ServiceProvider">
+              <MappingFragment StoreEntitySet="ServiceProvider">
+                <ScalarProperty Name="ProviderID" ColumnName="ProviderID" />
+                <ScalarProperty Name="ProviderType" ColumnName="ProviderType" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Transactions">
+            <EntityTypeMapping TypeName="LMS.API.Model.Transaction">
+              <MappingFragment StoreEntitySet="Transactions">
+                <ScalarProperty Name="LastUpdated" ColumnName="LastUpdated" />
+                <ScalarProperty Name="EntryDate" ColumnName="EntryDate" />
+                <ScalarProperty Name="TransactionType" ColumnName="TransactionType" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />
+                <ScalarProperty Name="ContactNumber" ColumnName="ContactNumber" />
+                <ScalarProperty Name="AccountNumber" ColumnName="AccountNumber" />
+                <ScalarProperty Name="ProviderName" ColumnName="ProviderName" />
+                <ScalarProperty Name="ProviderType" ColumnName="ProviderType" />
+                <ScalarProperty Name="TransactionID" ColumnName="TransactionID" />
+                <ScalarProperty Name="RefNo" ColumnName="RefNo" />
+                <ScalarProperty Name="EntryID" ColumnName="EntryID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="usp_validateCustomerRefernceID" FunctionName="LMS.API.Model.Store.usp_validateCustomerRefernceID" />
+          <EntitySetMapping Name="vwCustomersLoanOutstandings">
+            <EntityTypeMapping TypeName="LMS.API.Model.vwCustomersLoanOutstanding">
+              <MappingFragment StoreEntitySet="vwCustomersLoanOutstanding">
+                <ScalarProperty Name="Balance" ColumnName="Balance" />
+                <ScalarProperty Name="Account_Name" ColumnName="Account_Name" />
+                <ScalarProperty Name="Account_Number" ColumnName="Account_Number" />
+                <ScalarProperty Name="EntryID" ColumnName="EntryID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Transactions_Logs">
+            <EntityTypeMapping TypeName="LMS.API.Model.Transactions_Logs">
+              <MappingFragment StoreEntitySet="Transactions_Logs">
+                <ScalarProperty Name="LogEntryDateTime" ColumnName="LogEntryDateTime" />
+                <ScalarProperty Name="Descriptions" ColumnName="Descriptions" />
+                <ScalarProperty Name="LogID" ColumnName="LogID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Loan_Outstanding_3">
+            <EntityTypeMapping TypeName="LMS.API.Model.Loan_Outstanding_3">
+              <MappingFragment StoreEntitySet="Loan_Outstanding_3">
+                <ScalarProperty Name="Balance" ColumnName="Balance" />
+                <ScalarProperty Name="Account_Name" ColumnName="Account_Name" />
+                <ScalarProperty Name="Account_Number" ColumnName="Account_Number" />
+                <ScalarProperty Name="EntryID" ColumnName="EntryID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
